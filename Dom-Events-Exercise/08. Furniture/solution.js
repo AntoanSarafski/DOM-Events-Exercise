@@ -7,42 +7,46 @@ function parseFurnitureInput() {
   const input = JSON.parse(document.querySelector("#exercise textarea").value);
   console.log(input);
   const tableBody = document.querySelector("tbody");
+  const cellCreator = createCellCreator();
 
   input
     .map(cellCreator.createFurnitureRow)
     .forEach((row) => tableBody.appendChild(row));
 }
 
-const cellCreator = {
-  createFurnitureRow(furniture) {
-    const row = document.createElement("tr");
-
-    row.appendChild(cellCreator.createImageCell(furniture.img));
-    row.appendChild(cellCreator.createTextCell(furniture.name));
-    row.appendChild(cellCreator.createTextCell(furniture.price));
-    row.appendChild(cellCreator.createTextCell(furniture.decFactor));
-    row.appendChild(cellCreator.createCheckboxCell());
-
-    return row;
-  },
-  createImageCell(src) {
+function createCellCreator() {
+  function createImageCell(src) {
     const imageCell = document.createElement("td");
     const img = document.createElement("img");
     img.src = src;
     imageCell.appendChild(img);
     return imageCell;
-  },
-  createTextCell(text) {
+  }
+  function createTextCell(text) {
     const cell = document.createElement("td");
     cell.textContent = text;
     return cell;
-  },
-  createCheckboxCell() {
+  }
+  function createCheckboxCell() {
     const checkCell = document.createElement("td");
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkCell.appendChild(checkbox);
 
     return checkCell;
-  },
-};
+  }
+
+  return {
+    createFurnitureRow(furniture) {
+      const row = document.createElement("tr");
+
+      row.appendChild(createImageCell(furniture.img));
+      row.appendChild(createTextCell(furniture.name));
+      row.appendChild(createTextCell(furniture.price));
+      row.appendChild(createTextCell(furniture.decFactor));
+      row.appendChild(createCheckboxCell());
+
+      return row;
+    },
+  };
+}
