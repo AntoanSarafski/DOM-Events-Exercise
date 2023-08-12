@@ -14,15 +14,30 @@ function buySelectedFurniture() {
   const checkboxes = Array.from(
     document.querySelectorAll('input[type="checkbox"]:checked')
   );
-  checkboxes.map((checkbox) => {
-    const row = checkbox.parentElement.parentElement;
-    const name = row.querySelector("td:nth-of-type(2)").innerText;
-    const price = row.querySelector("td:nth-of-type(3)").innerText;
-    const decFactor = row.querySelector("td:nth-of-type(4)").innerText;
+  const cart = checkboxes.map(mapCheckboxToObject).reduce(
+    (acc, curr) => {
+      acc.names.push(curr.name);
+      acc.price += curr.price;
+      // acc.avgDecFactor = curr.decFactor;
 
-    console.log({ name, price, decFactor });
-    return { name, price, decFactor };
-  });
+      return acc;
+    },
+    {
+      names: [],
+      price: 0,
+      avgDecFactor: 0,
+    }
+  );
+  console.log(cart);
+}
+
+function mapCheckboxToObject(checkbox) {
+  const row = checkbox.parentElement.parentElement;
+  const name = row.querySelector("td:nth-of-type(2)").innerText;
+  const price = Number(row.querySelector("td:nth-of-type(3)").innerText);
+  const decFactor = row.querySelector("td:nth-of-type(4)").innerText;
+
+  return { name, price, decFactor };
 }
 
 function parseFurnitureInput() {
