@@ -1,6 +1,28 @@
 function solve() {
-  const button = document.querySelector("#exercise button");
-  button.addEventListener("click", parseFurnitureInput);
+  const formatButton = document.querySelector("#exercise button");
+  formatButton.addEventListener("click", parseFurnitureInput);
+
+  const buyButton = document.querySelector("#exercise button:nth-of-type(2)");
+  buyButton.addEventListener("click", buySelectedFurniture);
+
+  Array.from(document.querySelectorAll('input[type="checkbox"]')).forEach(
+    (checkbox) => checkbox.removeAttribute("disabled")
+  );
+}
+
+function buySelectedFurniture() {
+  const checkboxes = Array.from(
+    document.querySelectorAll('input[type="checkbox"]:checked')
+  );
+  checkboxes.map((checkbox) => {
+    const row = checkbox.parentElement.parentElement;
+    const name = row.querySelector("td:nth-of-type(2)").innerText;
+    const price = row.querySelector("td:nth-of-type(3)").innerText;
+    const decFactor = row.querySelector("td:nth-of-type(4)").innerText;
+
+    console.log({ name, price, decFactor });
+    return { name, price, decFactor };
+  });
 }
 
 function parseFurnitureInput() {
