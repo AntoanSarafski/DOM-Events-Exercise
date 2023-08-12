@@ -8,22 +8,23 @@ function parseFurnitureInput() {
   console.log(input);
   const tableBody = document.querySelector("tbody");
 
-  input.map(createFurnitureRow).forEach((row) => tableBody.appendChild(row));
-}
-
-function createFurnitureRow(furniture) {
-  const row = document.createElement("tr");
-
-  row.appendChild(cellCreator.createImageCell(furniture.img));
-  row.appendChild(cellCreator.createTextCell(furniture.name));
-  row.appendChild(cellCreator.createTextCell(furniture.price));
-  row.appendChild(cellCreator.createTextCell(furniture.decFactor));
-  row.appendChild(cellCreator.createCheckboxCell());
-
-  return row;
+  input
+    .map(cellCreator.createFurnitureRow)
+    .forEach((row) => tableBody.appendChild(row));
 }
 
 const cellCreator = {
+  createFurnitureRow(furniture) {
+    const row = document.createElement("tr");
+
+    row.appendChild(cellCreator.createImageCell(furniture.img));
+    row.appendChild(cellCreator.createTextCell(furniture.name));
+    row.appendChild(cellCreator.createTextCell(furniture.price));
+    row.appendChild(cellCreator.createTextCell(furniture.decFactor));
+    row.appendChild(cellCreator.createCheckboxCell());
+
+    return row;
+  },
   createImageCell(src) {
     const imageCell = document.createElement("td");
     const img = document.createElement("img");
