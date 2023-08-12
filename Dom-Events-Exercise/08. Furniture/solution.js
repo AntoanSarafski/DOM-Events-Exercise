@@ -18,7 +18,7 @@ function buySelectedFurniture() {
     (acc, curr) => {
       acc.names.push(curr.name);
       acc.price += curr.price;
-      // acc.avgDecFactor = curr.decFactor;
+      acc.avgDecFactor += curr.decFactor;
 
       return acc;
     },
@@ -28,14 +28,25 @@ function buySelectedFurniture() {
       avgDecFactor: 0,
     }
   );
-  console.log(cart);
+
+  cart.avgDecFactor = cart.avgDecFactor / cart.names.length;
+
+  const cartTextArea = document.querySelector(
+    "#exercise textarea:nth-of-type(2)"
+  );
+
+  cartTextArea.value = `
+  Bought furniture: ${cart.names.join(", ")}
+  Total price: ${cart.price.toFixed(2)}
+  Avg Dec Factor: ${cart.avgDecFactor.toFixed(2)}
+  `;
 }
 
 function mapCheckboxToObject(checkbox) {
   const row = checkbox.parentElement.parentElement;
   const name = row.querySelector("td:nth-of-type(2)").innerText;
   const price = Number(row.querySelector("td:nth-of-type(3)").innerText);
-  const decFactor = row.querySelector("td:nth-of-type(4)").innerText;
+  const decFactor = Number(row.querySelector("td:nth-of-type(4)").innerText);
 
   return { name, price, decFactor };
 }
