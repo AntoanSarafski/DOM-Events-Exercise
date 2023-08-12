@@ -12,32 +12,42 @@ function parseFurnitureInput() {
     .map((furniture) => {
       const row = document.createElement("tr");
 
-      const imageCell = document.createElement("td");
-      const img = document.createElement("img");
-      img.src = furniture.img;
-      imageCell.appendChild(img);
-
-      const nameCell = document.createElement("td");
-      nameCell.textContent = furniture.name;
-
       const priceCell = document.createElement("td");
       priceCell.textContent = furniture.price;
 
       const decorationFactorCell = document.createElement("td");
       decorationFactorCell.textContent = furniture.decFactor;
 
-      const checkCell = document.createElement("td");
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkCell.appendChild(checkbox);
-
-      row.appendChild(imageCell);
-      row.appendChild(nameCell);
-      row.appendChild(priceCell);
-      row.appendChild(decorationFactorCell);
-      row.appendChild(checkCell);
+      row.appendChild(createImageCell(furniture.img));
+      row.appendChild(createTextCell(furniture.name));
+      row.appendChild(createTextCell(furniture.price));
+      row.appendChild(createTextCell(furniture.decFactor));
+      row.appendChild(createCheckboxCell());
 
       return row;
     })
     .forEach((row) => tableBody.appendChild(row));
+}
+
+function createImageCell(src) {
+  const imageCell = document.createElement("td");
+  const img = document.createElement("img");
+  img.src = src;
+  imageCell.appendChild(img);
+  return imageCell;
+}
+
+function createTextCell(text) {
+  const cell = document.createElement("td");
+  cell.textContent = text;
+  return cell;
+}
+
+function createCheckboxCell() {
+  const checkCell = document.createElement("td");
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkCell.appendChild(checkbox);
+
+  return checkCell;
 }
